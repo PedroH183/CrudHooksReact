@@ -1,0 +1,12 @@
+/*
+    Implementação de funções
+        Verificação da repição de dados,
+        Mudar a forma como estou armazenando, pois se eu apagar um item como uma determinada chave apago tudo.
+
+*/
+
+/*
+    Observações sobre a checagem do input:
+        a função já deve ser chamada com os parametros de read do arquivo
+        
+*/
