@@ -1,23 +1,12 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { armazenarNome } from './services';
+import { armazenarNomeDb, ListarNomes} from './services';
 
 
 export const Form = () => {
 
     const [ name, setName ] = useState("");
-
-    const listarNomes = (chave) => {
-        let listObjetos = [];
-
-        if( localStorage.getItem(chave) !== null)
-        {   // ler os nomes salvos dentro do storage
-            const newArrayObject = JSON.parse(localStorage.getItem(chave));
-            listObjetos = newArrayObject.map((nome) => nome);
-        }
-
-        return( listObjetos.map((nome) => <li>{nome}</li>) );
-    }
+    const [ phone, setPhone ] = useState("");
 
     return (
         <>
@@ -28,13 +17,25 @@ export const Form = () => {
                     onChange={ (e) => setName(e.target.value) } 
                     name='name' 
                     placeholder='Insira seu nome' />
+                
+                <input 
+                    type='text' 
+                    value={phone} 
+                    onChange={ (e) => setPhone(e.target.value) } 
+                    name='name' 
+                    placeholder='Insira seu telefone' />
 
-                <input type="submit" value="Enviar" onClick={ () => armazenarNome('listNames', name) }></input>
+                <input type="submit" value="Enviar" onClick={ () => armazenarNomeDb('listNames', name) }></input>
             </form>
 
-            <ul>
-                {listarNomes('listNames')}
-            </ul>
+
+
+        
+            Cabeçalho
+            <table>
+                <ListarNomes listnomes={'listNames'}/>
+            </table>
+        
         </>
     )
 }

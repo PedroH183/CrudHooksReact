@@ -1,12 +1,23 @@
 /*
     Implementação de funções
         Verificação da repição de dados,
-        Mudar a forma como estou armazenando, pois se eu apagar um item como uma determinada chave apago tudo.
+        Mudar a forma como estou armazenando, pois se eu apagar um item como uma determinada chave apago tudo. OK
+        Funcionalidade de Delete.
+        Funcionalidade de Ordenação.
 
+*/
+
+/*
+    Implementação no codigo !
+        cabeçalho da tabela.
+        Inserir mais campos na tabela, deixará de ser apenas os nomes
 */
 
 /*
     Observações sobre a checagem do input:
         a função já deve ser chamada com os parametros de read do arquivo
-        
+    
+    Observações sobre o codigo em geral:
+        atribuir um id para cada elemento ! OK
+        possivel bug na checagem de repetição de codigo, verificar!
 */
