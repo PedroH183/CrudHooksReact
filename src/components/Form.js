@@ -1,10 +1,9 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { armazenarNomeDb, ListarNomes} from './services';
+import { armazenarNomeDb} from './services';
 
 
 export const Form = () => {
-
     const [ name, setName ] = useState("");
     const [ phone, setPhone ] = useState("");
 
@@ -25,16 +24,8 @@ export const Form = () => {
                     name='name' 
                     placeholder='Insira seu telefone' />
 
-                <input type="submit" value="Enviar" onClick={ () => armazenarNomeDb('listNames', name) }></input>
+                <input type="submit" value="Enviar" onClick={ () => armazenarNomeDb('listNames', name, phone) }/>
             </form>
-
-
-
-        
-            Cabeçalho
-            <table>
-                <ListarNomes listnomes={'listNames'}/>
-            </table>
         
         </>
     )

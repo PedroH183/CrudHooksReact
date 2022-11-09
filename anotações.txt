@@ -10,7 +10,7 @@
 /*
     Implementação no codigo !
         cabeçalho da tabela.
-        Inserir mais campos na tabela, deixará de ser apenas os nomes
+        Inserir mais campos na tabela, deve ser
 */
 
 /*
