@@ -1,0 +1,40 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.ContainerInsertionDatas{
+    background-color: #fff;
+}
+
+.InputDados{
+    background-color: #fff;
+    box-shadow: 0px 0px 1px rgb(167, 167, 167);
+    border: 1px solid;
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+
+.InputLabelDados{
+    display: inline-block;
+    margin-top: 20px;
+    border-radius: 5px;
+    font-size: 20px;
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+.SendButton{
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    background-color: teal;
+    margin-left: 10%;
+}
+
+.SendButton:hover{
+    opacity: 70%;
+    background-color: rgb(29, 172, 105);
+}

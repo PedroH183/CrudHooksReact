@@ -1,0 +1,51 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+
+.ResumeSections{
+    position: relative;
+    display: flex;
+}
+
+.EntradasCs{
+    max-width: 1120px;
+    margin: 20px;
+    width: 98%;
+    background-color: #fff;
+    box-shadow: 0px 0px 2px rgb(167, 167, 167);
+    border-radius: 5px;
+    display: block;
+    justify-content: space-around;
+    padding: 15px 0px;
+}
+
+.EntradasCs span{
+    display: flex;
+    color:black;
+    font-size: 35px;
+}
+
+.EntradasCs h2{
+    position: absolute;
+    margin-left: 5%;
+    margin-top: 0.8%;
+}
+
+.iconeInputs{
+    font-size: 2rem;
+    padding: 10px;
+    position: relative;
+    margin: -2px 40px 0px 75%;
+}
+
+.iconeInputs p{
+    background-color: red;
+    margin-right: 20px;
+}
+
+.textIcons{
+    text-align: center;
+    font-size: 2.0rem;
+}

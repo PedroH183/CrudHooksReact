@@ -1,0 +1,24 @@
+
+
+
+O tipo preferido para se declarar os tipos de (funções ou classe) é usando interface, mas tambem é possivel utilizar : TypeName para definir o tipo de uma variavel, essa última é bastante utilizada na definição de funcionalidades específicas.
+	Um objeto em TypeScript mescla ambos os casos ( usa a interface para definir o tipo de dados que o objeto terá e : typeName para atribuir aquele 	tipo ao objeto )	
+
+Os genericos servem para tornar uma logica utilizavel em mais de uma tipo  de dado .
+
+O que vem depois dos parametros de uma função é o tipo de retorno da função.
+
+Nenhum Objeto em Typescript pode ser utilizado até seu tipo ser definido.
+Se eu omitir o tipo da função ela retorna um Never ? Tambem pode ser especificado! 
+
+Em Typescript usa Unions como uma forma de controle de tipo de variavável.
+	O typescript possui inferencia isso permite que as vezes ele ja defina o tipo da variavel.
+
+Os elementos html geralmente são passados como children de componentes, isso facilita a 
+
+type é interessante para que se possa reutilizar uma 'interface' de dados.
+
+se eu abrir uma 
+
+Tentar criar uma interface que produz um campo que gera uma lista de dados.
+
