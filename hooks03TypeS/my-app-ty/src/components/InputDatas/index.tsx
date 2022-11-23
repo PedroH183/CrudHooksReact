@@ -4,11 +4,10 @@ import './index.css'
 
 
 interface PropsInputData{
-    listItems: any[],
     handleSave: any,
 }
 
-export const InputData = ({listItems, handleSave}: PropsInputData) => {
+export const InputData = ({handleSave}: PropsInputData) => {
  
     const [valor, setValor] = useState(0);
     const [isEntrada, setIsEntrada] = useState(true);
@@ -25,7 +24,7 @@ export const InputData = ({listItems, handleSave}: PropsInputData) => {
 
     const handleSubmitValues = (e: SyntheticEvent) => {
         e.preventDefault();
-        if ( descTemp === '' || !valor) {
+        if ( !valor ) {
             alert("Informe a descrição e o valor!");
             return;
         } else if (valor < 1) {
@@ -97,8 +96,9 @@ export const InputData = ({listItems, handleSave}: PropsInputData) => {
 
             </form>
         </div>
+
         <span><b>RESULTADO TESTE : { descTemp } {valor} </b></span>
-        <hr></hr>
+        <hr />
         <GridList />
     </div>
   )

@@ -6,12 +6,13 @@ import {
 } from 'react-icons/ai';
 import './index.css';
 
+interface resumeProps{
+    total: number
+}
 
-export const Resume: React.FC = ({}) => {
-    /* todos esses states serão elevados pois a logic esta presente no nó mais alto da arvore*/
+export const Resume = ({ total }: resumeProps) => {
     const [ entradas, setEntradas ] = useState(0);
     const [ saidas, setSaidas ] = useState(0);
-    const [ total, setTotal ] = useState(0);
 
     return (
         <div className='ResumeSections'>
