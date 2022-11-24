@@ -4,32 +4,58 @@ import { InputData } from '../InputDatas/index';
 import { GridList } from '../Grid';
 import './conteiner.css';
 
-interface objectProps{
+
+export interface objectProps{
     id: number,
     desc: string,
     valor: number,
     expense: boolean,
 }
 
-const NameAcessDatas: string = 'ListaDados';
+export const NameAcessDatas: string = 'ListaDados';
+
+// deve calcular a diferença entre os valores 
+const calcu_total = (list_dados_send: objectProps[] ): number[] =>{
+    let entrada = 0; 
+    let saida = 0;
+
+    list_dados_send.forEach( ( objeto : objectProps ) => {
+        if(objeto.expense)
+        {   // é um gasto
+            saida += objeto.valor;
+        }else
+        {  // é uma entrada 
+            entrada += objeto.valor;
+        }
+    });
+
+    const valores = [entrada, saida, entrada-saida]
+    return valores;
+}
+
+
 export const MyContextData = createContext<objectProps[]>([]);
 
 export const DataManager: React.FC =() => {
-    const [ listaGrid, setListaGrid ] = useState<objectProps[]>([]);
-    
     const list_dados_use = localStorage.getItem(NameAcessDatas);
-    const list_dados_send = list_dados_use ? JSON.parse(list_dados_use) : []; // pegar o objeto esta funcionando
-    const [ total, setTotal ] = useState(0);
+    const list_dados_send: [] = list_dados_use ? JSON.parse(list_dados_use) : [];
+    
+    const [ listaGrid, setListaGrid ] = useState<objectProps[]>( list_dados_send );
+
+    const [ total, setTotal ] = useState<number>(0);
+    const [ entradas, setEntradas ] = useState<number>(0);
+    const [ saidas, setSaidas ] = useState<number>(0);
     
     useEffect(() => {
-        // criar a logica para interagir com o resume.
-        let temp_total = 0;
-        listaGrid.forEach( (objeto) =>  (temp_total += Number(objeto.valor) ) );
-        setTotal(temp_total);
+        // Resume Effects
+        const array_resume = calcu_total(listaGrid);
+        setEntradas(array_resume[0]);
+        setSaidas( array_resume[1] );
+        setTotal( array_resume[2] );
 
-    }, [listaGrid]);
-
-
+    },[listaGrid]);
+    
+    
     const handleSave = (newTransaction: objectProps) =>{
         const save_datas: objectProps[] = [...list_dados_send, newTransaction]
         setListaGrid(save_datas);
@@ -40,8 +66,8 @@ export const DataManager: React.FC =() => {
     return(
         <MyContextData.Provider value={listaGrid}>
             <div className='TableContainer'>
-                <Resume total={total} />
-                <InputData handleSave={handleSave} />
+                <Resume total={total} entrada={entradas} saida={saidas} />
+                <InputData handleSave={handleSave} handleChangeList={setListaGrid}/>
             </div>
         </MyContextData.Provider>
     );

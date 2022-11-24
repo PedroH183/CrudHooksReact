@@ -5,12 +5,13 @@ import './index.css'
 
 interface PropsInputData{
     handleSave: any,
+    handleChangeList: any,
 }
 
-export const InputData = ({handleSave}: PropsInputData) => {
+export const InputData = ({handleSave, handleChangeList}: PropsInputData) => {
  
+    const [isExpense, setIsExpense] = useState<boolean>(false);
     const [valor, setValor] = useState(0);
-    const [isEntrada, setIsEntrada] = useState(true);
     const [descTemp, setDescTemp] = useState('');
     
     const generateID = () => Math.round(Math.random() * 1000);
@@ -36,7 +37,7 @@ export const InputData = ({handleSave}: PropsInputData) => {
             id: generateID(),
             desc: descTemp,
             valor: valor,
-            expense: isEntrada,
+            expense: isExpense,
         };
 
         handleSave(transaction);
@@ -78,7 +79,7 @@ export const InputData = ({handleSave}: PropsInputData) => {
                         type='checkbox'
                         name='EntradaCheck'
                         value='1'
-                        onClick={ () => setIsEntrada(!isEntrada) }/>
+                        onClick={ () => setIsExpense(false) }/>
                 </div>
 
                 <div className='InputLabelDados'>
@@ -87,7 +88,7 @@ export const InputData = ({handleSave}: PropsInputData) => {
                         type='checkbox'
                         value='0'
                         name='SaidaCheck'
-                        onClick={ () => setIsEntrada(!isEntrada) }/>
+                        onClick={ () => setIsExpense(true) }/>
 
                 </div>
                     <input type="submit"
@@ -96,10 +97,8 @@ export const InputData = ({handleSave}: PropsInputData) => {
 
             </form>
         </div>
-
-        <span><b>RESULTADO TESTE : { descTemp } {valor} </b></span>
         <hr />
-        <GridList />
+        <GridList change_list={handleChangeList}/>
     </div>
   )
 }

@@ -7,12 +7,12 @@ import {
 import './index.css';
 
 interface resumeProps{
-    total: number
+    entrada: number,
+    saida: number,
+    total: number,
 }
 
-export const Resume = ({ total }: resumeProps) => {
-    const [ entradas, setEntradas ] = useState(0);
-    const [ saidas, setSaidas ] = useState(0);
+export const Resume = ({ entrada, saida, total }: resumeProps) => {
 
     return (
         <div className='ResumeSections'>
@@ -23,7 +23,7 @@ export const Resume = ({ total }: resumeProps) => {
                     <AiOutlineArrowUp />
                 </div>
                 <div className='textIcons'>
-                    <p>R$ {entradas}</p>
+                    <p>R$ {entrada} </p>
                 </div>
             </div>
 
@@ -33,7 +33,7 @@ export const Resume = ({ total }: resumeProps) => {
                     <AiOutlineArrowDown />
                 </div>
                 <div className='textIcons'>
-                    <p>R$ {saidas}</p>
+                    <p>R$ {saida}</p>
                 </div>
             </div>
 
