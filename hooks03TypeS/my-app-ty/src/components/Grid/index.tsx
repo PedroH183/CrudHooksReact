@@ -1,61 +1,68 @@
 import React, { useContext } from 'react'
-import { MyContextData } from '../Container/principalCont';
+import { MyContextData, objectProps } from '../Container/principalCont';
 import { NameAcessDatas } from '../Container/principalCont';
+import { Table } from 'antd'
+import './index.css'
 
 
-interface gridListProps{
-  change_list: any,
-}
-
-interface deleteProps{
+interface DeleteProps{
   id: number,
 }
 
-const DeleteButton = ({change_list, id}: gridListProps & deleteProps) =>{
+interface GridListProps{
+  change_list: any;
+}
+
+const DeleteButton = ({change_list, id}:  DeleteProps & GridListProps) =>{
   const meus_dados = useContext(MyContextData);
-  let newList: any[] = [];
 
   const deleteVar = () => {
     const novoArray = meus_dados.filter((objeto) => objeto.id !== id);
-    change_list(novoArray);
+    change_list(novoArray); // é um setState
     localStorage.setItem(NameAcessDatas, JSON.stringify(novoArray));
   }
-
 
   return (<button onClick={() => deleteVar()}>Delete</button>);
 }
 
-const GridDatasList = ({change_list}: gridListProps) => {
+
+export const GridList = ({change_list}: GridListProps) => {
   const meus_dados = useContext(MyContextData);
-  const dados_formatados = meus_dados.map(
-    (objeto) => {
-    return (
-    <tr key={objeto.id}>
-      <td>{objeto.desc}</td>
-      <td>{objeto.valor}</td>
-      <td>{objeto.expense? "Saida" : "Entrada"}</td>
-      <td><DeleteButton change_list={change_list} id={objeto.id}/></td>
-    </tr>)
-  })
+  const string_expense = (( expense: boolean ) => expense ? 'Saida' : 'Entrada');
+
+  const colunas = [
+    {
+      title: 'Descrição',
+      dataIndex: 'desc',
+      key:'desc',
+    },
+    {
+      title: 'Valor',
+      dataIndex: 'valor',
+      key:'valor',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'expense',
+      key:'expense',
+    },
+    {
+      title: '',
+      dataIndex: 'delete',
+      key: 'delete',
+    }
+  ];
+
+  const lista_dados = meus_dados.map( (objeto) => { return (
+    {
+      desc: objeto.desc,
+      valor: objeto.valor,
+      expense: string_expense(objeto.expense),
+      delete: <DeleteButton change_list={change_list} id={objeto.id}/>,
+    }
+  )})
   
-  return <>{dados_formatados}</>
-}
-
-
-// aqui eu quero renderizar a tabela.
-export const GridList = ({change_list}: gridListProps) => {
   return (
-    <>
-      <table>
-        <thead>
-            <th>Descrição</th>
-            <th>Valor</th>
-            <th>Status</th>
-        </thead>
-        <tbody>
-          <GridDatasList change_list={change_list}/>
-        </tbody>
-      </table>
-    </>
+      <Table columns={colunas} dataSource={ lista_dados }/>
   )
 }

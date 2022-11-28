@@ -1,7 +1,6 @@
 import React, { useEffect, useState, createContext } from 'react';
 import { Resume } from '../Resume/index';
 import { InputData } from '../InputDatas/index';
-import { GridList } from '../Grid';
 import './conteiner.css';
 
 
