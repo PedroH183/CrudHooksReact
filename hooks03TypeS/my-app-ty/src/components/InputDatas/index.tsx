@@ -1,5 +1,6 @@
 import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { GridList } from '../Grid/index';
+import { Button, Form, Input, Radio, Space } from 'antd';
 import './index.css'
 
 
@@ -15,13 +16,6 @@ export const InputData = ({handleSave, handleChangeList}: PropsInputData) => {
     const [descTemp, setDescTemp] = useState('');
     
     const generateID = () => Math.round(Math.random() * 1000);
-
-    useEffect(() => {
-        if( isNaN(valor) )
-        {
-            setValor(0);
-        }
-    }, [valor])
 
     const handleSubmitValues = (e: SyntheticEvent) => {
         e.preventDefault();
@@ -50,52 +44,39 @@ export const InputData = ({handleSave, handleChangeList}: PropsInputData) => {
     return (
     <div className='ContainerInsertionDatas'>
         <div className='InputDados'>
-            <form onSubmit={handleSubmitValues }>
-                <div className='InputLabelDados'>
-                    <label>Descrição</label>
-                    <br /> 
-                    <input
-                        type='text'
-                        name='describe'
-                        placeholder='Insira uma Descrição'
-                        required
-                        value={descTemp}
-                        onChange={(e) => setDescTemp(e.target.value)}/>
+            <Space direction='horizontal'>
+                <Form layout='inline'>
+                        <Form.Item label='Descrição'>
+                            <Input type='text'
+                                    name='describe'
+                                    placeholder='Insira a descrição'
+                                    value={descTemp}
+                                    required
+                                    onChange={(e) => setDescTemp(e.target.value)}/>
+                        </Form.Item>
+                        <Form.Item label='Valor'>
+                            <Input type='number'
+                                    name='valornum'
+                                    placeholder='Insira um valor'
+                                    value={valor}
+                                    required
+                                    onChange={(e) => setValor(parseInt(e.target.value))}/>
+                        </Form.Item>
 
-                </div>
-                <div className='InputLabelDados'>
-                    <label>Valor</label>
-                    <br />
-                    <input
-                        type='text'
-                        name='valornum'
-                        value={valor}
-                        required
-                        onChange={(e) => setValor(parseInt(e.target.value))}/>
-                </div>
-                <div className='InputLabelDados'>
-                    <label>Entrada</label>
-                    <input
-                        type='checkbox'
-                        name='EntradaCheck'
-                        value='1'
-                        onClick={ () => setIsExpense(false) }/>
-                </div>
+                        <Radio.Group value={isExpense}>
+                            <Radio  value={false}
+                                    onClick={() => setIsExpense(false)}>Entrada</Radio>
 
-                <div className='InputLabelDados'>
-                    <label>Saida</label>
-                    <input
-                        type='checkbox'
-                        value='0'
-                        name='SaidaCheck'
-                        onClick={ () => setIsExpense(true) }/>
+                            <Radio  value={true}
+                                    onClick={() => setIsExpense(true)}>Saida</Radio>
+                        </Radio.Group>
 
-                </div>
-                    <input type="submit"
-                            className='SendButton'
-                            value='Adicionar'/>
-
-            </form>
+                        <Form.Item>
+                            <Button onClick={(e) => handleSubmitValues(e)}>Adicionar</Button>
+                        </Form.Item>
+                    </Form>                
+            </Space>
+                
         </div>
         <hr />
         <GridList change_list={handleChangeList}/>

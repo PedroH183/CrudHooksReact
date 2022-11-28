@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { MyContextData, objectProps } from '../Container/principalCont';
 import { NameAcessDatas } from '../Container/principalCont';
-import { Table } from 'antd'
+import { Button, Table } from 'antd'
 import './index.css'
 
 
@@ -22,7 +22,7 @@ const DeleteButton = ({change_list, id}:  DeleteProps & GridListProps) =>{
     localStorage.setItem(NameAcessDatas, JSON.stringify(novoArray));
   }
 
-  return (<button onClick={() => deleteVar()}>Delete</button>);
+  return (<Button onClick={() => deleteVar()}>Delete</Button>);
 }
 
 
