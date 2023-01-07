@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { MyContextData, objectProps } from '../Container/principalCont';
+import { useContext } from 'react'
+import { MyContextData } from '../Container/principalCont';
 import { NameAcessDatas } from '../Container/principalCont';
 import { Button, Table } from 'antd'
 import './index.css'

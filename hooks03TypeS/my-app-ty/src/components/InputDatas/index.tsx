@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect, useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { GridList } from '../Grid/index';
 import { Button, Form, Input, Radio, Space } from 'antd';
 import './index.css'
