@@ -1,9 +1,13 @@
-import React,{useContext} from 'react'
 import TableDataItem from './TableDataItem'
 import { TableDataPros} from './types';
 
 
-const TableData = ({fields, buttonsInTable, addButton, data}: TableDataPros) => {
+const TableData = ({
+    data,
+    fields,
+    addButton,
+    actionsTable,
+    buttonsInTable,}: TableDataPros) => {
 
   return (
     <>
@@ -32,6 +36,21 @@ const TableData = ({fields, buttonsInTable, addButton, data}: TableDataPros) => 
                                         identificador={campo_tabela.key}/>
                                 )
                             })}
+                            {buttonsInTable && (
+                                <div>
+                                    {actionsTable.map( (action) => {
+                                            return(
+                                                <td 
+                                                    key={action.label}
+                                                    onClick={ (ev) => action.action(ev) }
+                                                    style={{cursor: 'pointer'}}>
+                                                    {action.icon}
+                                                </td>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            )}
                         </tr>
                     )
                 })}

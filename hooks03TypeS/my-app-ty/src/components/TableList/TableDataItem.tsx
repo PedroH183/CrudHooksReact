@@ -1,10 +1,5 @@
-import React from 'react'
-import { DataType } from './types'
+import { TableDataItemProps } from "./types"
 
-export interface TableDataItemProps{
-    data: any,
-    identificador: string,
-}
 
 const TableDataItem = ({data, identificador}: TableDataItemProps) => {
   return (
