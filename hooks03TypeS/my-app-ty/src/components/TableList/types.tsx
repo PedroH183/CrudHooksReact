@@ -29,6 +29,10 @@ export interface ButtonsTableProps{
   action: (ev: React.SyntheticEvent) => void
 }
 
+export interface SortTableProps{
+  chave: string,
+}
+
 export interface TableDataPros{
   data: DataType[],
   urlBase?: string,
@@ -38,4 +42,5 @@ export interface TableDataPros{
   buttonsInTable?: boolean,
   actionsTable: ButtonsTableProps[],
   buttonActions?: () => {},
+  sortMethod: ({chave}: SortTableProps) => void,
 }

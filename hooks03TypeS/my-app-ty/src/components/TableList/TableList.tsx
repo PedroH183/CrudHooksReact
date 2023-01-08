@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import TableData from './TableBody'
 
-import { FieldsTypes, DataType, ButtonsTableProps} from './types';
+import { FieldsTypes, DataType, ButtonsTableProps, SortTableProps} from './types';
 import { AiFillDelete } from 'react-icons/ai';
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';
 // import * as alertify from 'alertifyjs';
@@ -15,13 +15,16 @@ const TableList = () => {
         {id: 2, Nome: 'Claudia', Fone: '9999-4444'},
         {id: 3, Nome: 'Betinho', Fone: '9876-3333'},
         {id: 4, Nome: 'Ana Julia', Fone: '9855-3333'}, 
-        {id: 5, Nome: 'Bia Julia', Fone: '9755-3333'}  
+        {id: 5, Nome: 'Bia Julia', Fone: '9755-3333'},
+        {id: 6, Nome: 'Pedro', Fone: '9745-7878'},
+        {id: 7, Nome: 'Lucas', Fone: '7855-3331'},
+        {id: 8, Nome: 'Nani', Fone: '1755-1111'}  
      ];
-
+    
     const [ meusDados, setMeusDados] = useState<DataType[]>(data);
-    const [ filterText, setFilterText ] = useState<string>('')
-    
-    
+    const [ filterText, setFilterText ] = useState<string>('');
+    const [ sortConfig, setSortConfig ] = useState<string>('descending');
+
     const columnFilterName = useMemo( () => {
         const lowerName = filterText.toLowerCase(); // pesquisa em lower para evitar processamento
         
@@ -29,7 +32,7 @@ const TableList = () => {
             meusDados.filter( 
                 (object) => object.Nome.toLowerCase().includes(lowerName))
         )
-    }, [filterText]) // como essa lista vai ser dinamica esses campos entram dentro do array de dependências.
+    }, [filterText, meusDados]) // como essa lista vai ser dinamica esses campos entram dentro do array de dependências.
     
     const fields : FieldsTypes[]=[
         {
@@ -63,6 +66,37 @@ const TableList = () => {
         }
     ]
 
+    const requestSort = ({chave}: SortTableProps) => {
+        let direction = 'ascending';
+
+        if ( sortConfig === 'ascending' ) {
+            direction = 'descending';
+        }
+        console.log(direction);
+        setSortConfig(direction);
+        sortingTableByAKey({chave});
+    }
+
+    const sortingTableByAKey = ({ chave }: SortTableProps) => {
+        let sortedArrayData: any = [...meusDados]; // change other list 
+        
+        sortedArrayData = sortedArrayData.sort( (first: any, second: any) => {
+            let firstElement = first[chave].toLowerCase();
+            let secondElement = second[chave].toLowerCase();
+
+            if( firstElement < secondElement ){
+                return sortConfig === 'descending' ? -1 : 1;
+            }
+            if( firstElement > secondElement ){
+                return sortConfig === 'descending' ? 1 : -1;
+            }
+            return(0);
+        } )
+    
+        console.log(sortedArrayData);
+        setMeusDados(sortedArrayData);
+    }
+
     const InsertDataInTable = (ev: React.SyntheticEvent) => {
         ev.preventDefault();
         let temp_state = [...meusDados];
@@ -81,6 +115,7 @@ const TableList = () => {
             fields={fields}
             buttonsInTable={true}
             actionsTable={buttonsInTable}
+            sortMethod={requestSort}
             addButton={ {label: 'Adicionar', button_method: InsertDataInTable} }/>
     </div>
   )

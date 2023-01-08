@@ -7,6 +7,7 @@ const TableData = ({
     fields,
     addButton,
     actionsTable,
+    sortMethod,
     buttonsInTable,}: TableDataPros) => {
 
   return (
@@ -18,7 +19,9 @@ const TableData = ({
                 <tr>
                     {fields.map( (campo) => {
                         return(
-                            <th key={campo.key}>{campo.title}</th> 
+                            <th key={campo.key}>
+                                <button onClick = { () => sortMethod({ chave : campo.key}) } >{campo.title}</button>
+                            </th> 
                         )})
                     }
                     { buttonsInTable && <th>Ações</th> }
