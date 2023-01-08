@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import TableData from './TableBody'
 
 import { FieldsTypes, DataType, ButtonsTableProps} from './types';
 import { AiFillDelete } from 'react-icons/ai';
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';
+// import * as alertify from 'alertifyjs';
+// import 'alertifyjs/build/css/alertify.css';
+
 
 const TableList = () => {
     // lembrar de passar as props da tabela para esse componente maior.
@@ -17,9 +20,16 @@ const TableList = () => {
 
     const [ meusDados, setMeusDados] = useState<DataType[]>(data);
     const [ filterText, setFilterText ] = useState<string>('')
-
-    const columnFilterName = meusDados.filter( 
-        (object) => object.Nome.toLowerCase().includes(filterText.toLowerCase()))
+    
+    
+    const columnFilterName = useMemo( () => {
+        const lowerName = filterText.toLowerCase(); // pesquisa em lower para evitar processamento
+        
+        return(
+            meusDados.filter( 
+                (object) => object.Nome.toLowerCase().includes(lowerName))
+        )
+    }, [filterText]) // como essa lista vai ser dinamica esses campos entram dentro do array de dependências.
     
     const fields : FieldsTypes[]=[
         {
