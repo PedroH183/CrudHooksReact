@@ -1,10 +1,10 @@
 import React from "react";
 
+
 export interface buttonAddData{
   label: string,
   button_method(ev: React.SyntheticEvent): void;
 }
-
 
 export interface TableDataItemProps{
   data: any,
@@ -20,6 +20,11 @@ export interface DataType{
   id: number,
   Nome: string,
   Fone: string,
+}
+
+export interface sortConfigTyp{
+  direction: 'descending' | 'ascending',
+  key: string,
 }
 
 export interface ButtonsTableProps{

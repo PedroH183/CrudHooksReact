@@ -1,15 +1,47 @@
 import React, { useMemo, useState } from 'react'
 import TableData from './TableBody'
 
-import { FieldsTypes, DataType, ButtonsTableProps, SortTableProps} from './types';
+import { FieldsTypes, DataType, ButtonsTableProps, SortTableProps, sortConfigTyp} from './types';
 import { AiFillDelete } from 'react-icons/ai';
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';
-// import * as alertify from 'alertifyjs';
-// import 'alertifyjs/build/css/alertify.css';
 
+
+const useSortedData = ( meusDados: any, config = null) => {
+    const [ sortConfig, setSortConfig ] = useState<sortConfigTyp | null>( config );
+
+    const requestSort = ( {chave}: SortTableProps ) => {
+        let directionNew: 'ascending' | 'descending' = 'descending';
+        
+        if ( sortConfig && sortConfig.key === chave && sortConfig.direction === 'descending' ) {
+            directionNew = 'ascending';
+        }
+        setSortConfig({ direction: directionNew, key: chave});
+    }
+
+    const sortingArrayByAField =  useMemo( () => {
+        let sortedArrayData: any = [...meusDados]; // change other list 
+        
+        if(sortConfig !== null){
+            sortedArrayData = sortedArrayData.sort( (first: any, second: any) => {
+                let firstElement = first[sortConfig.key].toLowerCase();
+                let secondElement = second[sortConfig.key].toLowerCase();
+                
+                if( firstElement < secondElement ){
+                    return sortConfig.direction === 'descending' ? -1 : 1;
+                }
+                if( firstElement > secondElement ){
+                    return sortConfig.direction === 'descending' ? 1 : -1;
+                }
+                return(0);
+            } )
+        }
+        return sortedArrayData;
+    }, [ sortConfig, meusDados ]);
+
+    return { meus_dados: sortingArrayByAField, requestSort, sortConfig};
+}
 
 const TableList = () => {
-    // lembrar de passar as props da tabela para esse componente maior.
     let data: DataType[] = [
         {id: 1, Nome: 'Ajalmar', Fone: '8888-7777'},
         {id: 2, Nome: 'Claudia', Fone: '9999-4444'},
@@ -21,18 +53,17 @@ const TableList = () => {
         {id: 8, Nome: 'Nani', Fone: '1755-1111'}  
      ];
     
-    const [ meusDados, setMeusDados] = useState<DataType[]>(data);
     const [ filterText, setFilterText ] = useState<string>('');
-    const [ sortConfig, setSortConfig ] = useState<string>('descending');
+    const { meus_dados, requestSort } = useSortedData(data)
 
     const columnFilterName = useMemo( () => {
-        const lowerName = filterText.toLowerCase(); // pesquisa em lower para evitar processamento
+        const lowerName = filterText.toLowerCase();
         
         return(
-            meusDados.filter( 
-                (object) => object.Nome.toLowerCase().includes(lowerName))
+            meus_dados.filter( 
+                (object: any) => object.Nome.toLowerCase().includes(lowerName))
         )
-    }, [filterText, meusDados]) // como essa lista vai ser dinamica esses campos entram dentro do array de dependências.
+    }, [filterText, meus_dados]) // como essa lista vai ser dinamica esses campos entram dentro do array de dependências.
     
     const fields : FieldsTypes[]=[
         {
@@ -66,42 +97,10 @@ const TableList = () => {
         }
     ]
 
-    const requestSort = ({chave}: SortTableProps) => {
-        let direction = 'ascending';
-
-        if ( sortConfig === 'ascending' ) {
-            direction = 'descending';
-        }
-        console.log(direction);
-        setSortConfig(direction);
-        sortingTableByAKey({chave});
-    }
-
-    const sortingTableByAKey = ({ chave }: SortTableProps) => {
-        let sortedArrayData: any = [...meusDados]; // change other list 
-        
-        sortedArrayData = sortedArrayData.sort( (first: any, second: any) => {
-            let firstElement = first[chave].toLowerCase();
-            let secondElement = second[chave].toLowerCase();
-
-            if( firstElement < secondElement ){
-                return sortConfig === 'descending' ? -1 : 1;
-            }
-            if( firstElement > secondElement ){
-                return sortConfig === 'descending' ? 1 : -1;
-            }
-            return(0);
-        } )
-    
-        console.log(sortedArrayData);
-        setMeusDados(sortedArrayData);
-    }
 
     const InsertDataInTable = (ev: React.SyntheticEvent) => {
         ev.preventDefault();
-        let temp_state = [...meusDados];
-        temp_state.push({id: 5, Nome: 'Pedro',Fone: '9999-999'});
-        setMeusDados(temp_state);
+        alert('ADICIONAAA');
     }
 
   return (
@@ -111,11 +110,11 @@ const TableList = () => {
                 onChange={ (ev) => setFilterText( ev.target.value ) }/>
         
         <TableData
-            data={columnFilterName}
             fields={fields}
             buttonsInTable={true}
-            actionsTable={buttonsInTable}
+            data={columnFilterName}
             sortMethod={requestSort}
+            actionsTable={buttonsInTable}
             addButton={ {label: 'Adicionar', button_method: InsertDataInTable} }/>
     </div>
   )

@@ -47,7 +47,7 @@ const TableData = ({
                                                     key={action.label}
                                                     onClick={ (ev) => action.action(ev) }
                                                     style={{cursor: 'pointer'}}>
-                                                    {action.icon}
+                                                            {action.icon}
                                                 </td>
                                             )
                                         })
