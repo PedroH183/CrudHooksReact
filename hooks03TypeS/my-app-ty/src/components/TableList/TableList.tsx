@@ -1,45 +1,16 @@
 import React, { useMemo, useState } from 'react'
 import TableData from './TableBody'
+import useSortedData from './SortedData/SortTableHook';
 
-import { FieldsTypes, DataType, ButtonsTableProps, SortTableProps, sortConfigTyp} from './types';
 import { AiFillDelete } from 'react-icons/ai';
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';
+import { FieldsTypes, ButtonsTableProps} from './types';
 
-
-const useSortedData = ( meusDados: any, config = null) => {
-    const [ sortConfig, setSortConfig ] = useState<sortConfigTyp | null>( config );
-
-    const requestSort = ( {chave}: SortTableProps ) => {
-        let directionNew: 'ascending' | 'descending' = 'descending';
-        
-        if ( sortConfig && sortConfig.key === chave && sortConfig.direction === 'descending' ) {
-            directionNew = 'ascending';
-        }
-        setSortConfig({ direction: directionNew, key: chave});
-    }
-
-    const sortingArrayByAField =  useMemo( () => {
-        let sortedArrayData: any = [...meusDados]; // change other list 
-        
-        if(sortConfig !== null){
-            sortedArrayData = sortedArrayData.sort( (first: any, second: any) => {
-                let firstElement = first[sortConfig.key].toLowerCase();
-                let secondElement = second[sortConfig.key].toLowerCase();
-                
-                if( firstElement < secondElement ){
-                    return sortConfig.direction === 'descending' ? -1 : 1;
-                }
-                if( firstElement > secondElement ){
-                    return sortConfig.direction === 'descending' ? 1 : -1;
-                }
-                return(0);
-            } )
-        }
-        return sortedArrayData;
-    }, [ sortConfig, meusDados ]);
-
-    return { meus_dados: sortingArrayByAField, requestSort, sortConfig};
-}
+interface DataType{
+    id: number,
+    Nome: string,
+    Fone: string,
+  }
 
 const TableList = () => {
     let data: DataType[] = [
@@ -50,12 +21,13 @@ const TableList = () => {
         {id: 5, Nome: 'Bia Julia', Fone: '9755-3333'},
         {id: 6, Nome: 'Pedro', Fone: '9745-7878'},
         {id: 7, Nome: 'Lucas', Fone: '7855-3331'},
-        {id: 8, Nome: 'Nani', Fone: '1755-1111'}  
+        {id: 8, Nome: 'Nani', Fone: '1755-1111'},
      ];
     
     const [ filterText, setFilterText ] = useState<string>('');
     const { meus_dados, requestSort } = useSortedData(data)
 
+    // filter sofre interferencia campo, pois precede a ideia de existir um campo chamado nome.
     const columnFilterName = useMemo( () => {
         const lowerName = filterText.toLowerCase();
         
@@ -63,7 +35,7 @@ const TableList = () => {
             meus_dados.filter( 
                 (object: any) => object.Nome.toLowerCase().includes(lowerName))
         )
-    }, [filterText, meus_dados]) // como essa lista vai ser dinamica esses campos entram dentro do array de dependências.
+    }, [filterText, meus_dados]) 
     
     const fields : FieldsTypes[]=[
         {

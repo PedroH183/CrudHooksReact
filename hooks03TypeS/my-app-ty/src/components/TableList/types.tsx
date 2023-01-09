@@ -16,17 +16,6 @@ export interface FieldsTypes{
   key: string,
 }
 
-export interface DataType{
-  id: number,
-  Nome: string,
-  Fone: string,
-}
-
-export interface sortConfigTyp{
-  direction: 'descending' | 'ascending',
-  key: string,
-}
-
 export interface ButtonsTableProps{
   label: string,
   icon: JSX.Element,
@@ -34,12 +23,9 @@ export interface ButtonsTableProps{
   action: (ev: React.SyntheticEvent) => void
 }
 
-export interface SortTableProps{
-  chave: string,
-}
 
 export interface TableDataPros{
-  data: DataType[],
+  data: any[],
   urlBase?: string,
   filter?: JSX.Element,
   fields: FieldsTypes[],
@@ -47,5 +33,5 @@ export interface TableDataPros{
   buttonsInTable?: boolean,
   actionsTable: ButtonsTableProps[],
   buttonActions?: () => {},
-  sortMethod: ({chave}: SortTableProps) => void,
+  sortMethod: ( chave: string ) => void,
 }

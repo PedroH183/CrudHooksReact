@@ -20,7 +20,7 @@ const TableData = ({
                     {fields.map( (campo) => {
                         return(
                             <th key={campo.key}>
-                                <button onClick = { () => sortMethod({ chave : campo.key}) } >{campo.title}</button>
+                                <button onClick = { () => sortMethod( campo.key ) } >{campo.title}</button>
                             </th> 
                         )})
                     }
@@ -40,7 +40,7 @@ const TableData = ({
                                 )
                             })}
                             {buttonsInTable && (
-                                <div>
+                                <>
                                     {actionsTable.map( (action) => {
                                             return(
                                                 <td 
@@ -52,7 +52,7 @@ const TableData = ({
                                             )
                                         })
                                     }
-                                </div>
+                                </>
                             )}
                         </tr>
                     )
