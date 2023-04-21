@@ -19,19 +19,15 @@ const calcu_total = (list_dados_send: objectProps[] ): number[] =>{
     let saida = 0;
 
     list_dados_send.forEach( ( objeto : objectProps ) => {
-        if(objeto.expense)
-        {   // é um gasto
+        if(objeto.expense){   
             saida += objeto.valor;
-        }else
-        {  // é uma entrada 
+        } else {
             entrada += objeto.valor;
         }
     });
 
-    const valores = [entrada, saida, entrada-saida]
-    return valores;
+    return [ entrada, saida, entrada-saida ];
 }
-
 
 export const MyContextData = createContext<objectProps[]>([]);
 
@@ -40,10 +36,10 @@ export const DataManager: React.FC =() => {
     const list_dados_send: [] = list_dados_use ? JSON.parse(list_dados_use) : [];
     
     const [ listaGrid, setListaGrid ] = useState<objectProps[]>( list_dados_send );
-
     const [ total, setTotal ] = useState<number>(0);
     const [ entradas, setEntradas ] = useState<number>(0);
     const [ saidas, setSaidas ] = useState<number>(0);
+    
     
     useEffect(() => {
         // Resume Effects
@@ -64,9 +60,11 @@ export const DataManager: React.FC =() => {
 
     return(
         <MyContextData.Provider value={listaGrid}>
-            <div className='TableContainer'>
-                <Resume total={total} entrada={entradas} saida={saidas} />
-                <InputData handleSave={handleSave} handleChangeList={setListaGrid}/>
+            <div className="managerContainer">
+                <div className='TableContainer'>
+                    <Resume total={total} entrada={entradas} saida={saidas} />
+                    <InputData handleSave={handleSave} handleChangeList={setListaGrid}/>
+                </div>
             </div>
         </MyContextData.Provider>
     );

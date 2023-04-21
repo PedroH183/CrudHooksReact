@@ -1,11 +1,20 @@
-import React from 'react'
+import { AiFillGithub, AiFillLinkedin, AiOutlineGithub } from 'react-icons/ai';
+import './index.css';
 
-export const Header: React.FC = () =>{
+export const Header = () =>{
     return(
-      <div className="containerPrincipal">
-        <div className='containerPricText'>
-            <h2>Sistema do Pedro</h2>
+      <nav className='navBar'>
+        <div className='headerPrincipal'>
+            <h1>Controle de Entradas e Saidas </h1>
         </div>
-      </div>
+        <div className="linksNav">
+            <div className="IconsLink">
+              <AiOutlineGithub cursor={"pointer"} width={100}/>
+            </div>
+            <div className="IconsLink">
+              <AiFillLinkedin/>
+            </div>
+        </div>
+      </nav>
     );
 }
